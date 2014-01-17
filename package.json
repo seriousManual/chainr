@@ -1,0 +1,28 @@
+{
+    "name": "chainr",
+    "version": "0.0.0",
+    "description": "flow control library",
+    "main": "index.js",
+    "scripts": {
+        "test": "./node_modules/.bin/mocha tests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/zaphod1984/chainr.git"
+    },
+    "keywords": [
+        "flow",
+        "control"
+    ],
+    "author": "Manuel Ernst <zaphod84@gmx.de>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/zaphod1984/chainr/issues"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "mocha": "~1.13.0",
+        "chai": "~1.7.2",
+        "sinon": "~1.7.3"
+    }
+}
