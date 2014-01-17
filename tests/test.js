@@ -139,6 +139,7 @@ describe('Chainr', function() {
             })
             .catch(function(error, cb) {
                 order.push(error);
+
                 cb();
             })
             .seq(function() {
