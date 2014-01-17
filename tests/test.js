@@ -58,25 +58,46 @@ describe('Chainr', function() {
             });
     });
 
-    it('should add the supplied values to the chain.vars object', function(done) {
-        var chain = chainr();
+    describe('internal value holder', function() {
+        it('should add the supplied values to the chain.vars object', function(done) {
+            var chain = chainr();
 
-        chain.seq('foo', function(cb) {
-            cb(null, 'bar');
+            chain
+                .seq('foo', function(cb) {
+                    setTimeout(cb.bind(null, null, 'bar'), 200);
+                })
+                .seq('bax', function(cb) {
+                    setTimeout(cb.bind(null, null, 'baz'), 200);
+                })
+                .seq(function() {
+                    expect(chain.vars).to.deep.equal({
+                        foo: 'bar',
+                        bax: 'baz'
+                    });
+
+                    done();
+                });
         });
 
-        chain.seq('bax', function(cb) {
-            cb(null, 'baz');
+        it('should add the supplied values to the chain.vars object', function(done) {
+            var chain = chainr();
+
+            chain
+                .par('foo', function(cb) {
+                    setTimeout(cb.bind(null, null, 'bar'), 200);
+                })
+                .par('bax', function(cb) {
+                    setTimeout(cb.bind(null, null, 'baz'), 100);
+                })
+                .seq(function() {
+                    expect(chain.vars).to.deep.equal({
+                        foo: 'bar',
+                        bax: 'baz'
+                    });
+
+                    done();
+                });
         });
-
-        chain.seq(function() {
-            expect(chain.vars).to.deep.equal({
-                foo: 'bar',
-                bax: 'baz'
-            });
-
-            done();
-        })
     });
 
     it('should not call catch when error occurs', function(done) {
