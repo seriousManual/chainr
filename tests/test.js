@@ -126,4 +126,14 @@ describe('Chainr', function() {
                 done();
             });
     });
+
+    it('should crash on multiple done call', function() {
+        expect(function() {
+            chainr()
+                .seq(function(cb) {
+                    cb();
+                    cb();
+                });
+        }).to.throw();
+    });
 });
