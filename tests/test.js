@@ -100,7 +100,7 @@ describe('Chainr', function() {
         });
     });
 
-    it('should not call catch when error occurs', function(done) {
+    it('should not call catch when no error occurs', function(done) {
         chainr()
             .seq(function(cb) {
                 setTimeout(cb, 100);
@@ -120,7 +120,7 @@ describe('Chainr', function() {
             });
     });
 
-    it('should jump to catch when error occurs, should execute subsequential seq, should not intermediate', function(done) {
+    it('should jump to catch when error occurs, should execute subsequential seq, should execute not intermediate', function(done) {
         var caboomError = new Error('caboom');
         var order = [];
 
