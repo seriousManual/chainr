@@ -1,5 +1,9 @@
 var Chainr = require('./lib/Chainr');
 
 module.exports = function() {
-    return new Chainr();
+    var chain = new Chainr();
+
+    process.nextTick(chain.run.bind(chain));
+
+    return chain;
 };

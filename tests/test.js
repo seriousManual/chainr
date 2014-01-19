@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var chainr = require('../');
 
 describe('Chainr', function() {
-    it('should call in sequence', function(done) {
+    it.only('should call in sequence', function(done) {
         var order = [];
 
         chainr()
