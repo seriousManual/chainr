@@ -1,17 +1,5 @@
-function chainr() {
-    var chain = {
-        seq: function (name, fn) {
-            return chain;
-        },
-        par: function (name, fn) {
-            return chain;
-        },
-        catch: function (fn) {
-            return chain;
-        }
-    };
+var Chainr = require('./lib/Chainr');
 
-    return chain;
-}
-
-module.exports = chainr;
+module.exports = function() {
+    return new Chainr();
+};
