@@ -158,4 +158,36 @@ describe('Chainr', function() {
                 });
         }).to.throw();
     });
+
+    describe.skip('sketchout', function() {
+        it('should', function(done) {
+            var order = [];
+
+            var chain = chainr();
+
+            chain
+                .seq(function(cb) {
+                    order.push('a');
+                    cb();
+                })
+                .seq(function(cb) {
+                    order.push('b');
+                    cb();
+                });
+
+            setTimeout(function() {
+                chain
+                    .seq(function(cb) {
+                        order.push('c');
+                        cb();
+                    })
+                    .seq(function(cb) {
+                        order.push('d');
+
+                        expect(order).to.deep.equal(['a', 'b', 'c', 'd']);
+                        done();
+                    });
+            }, 200);
+        })
+    });
 });
