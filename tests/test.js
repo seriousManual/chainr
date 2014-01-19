@@ -34,7 +34,7 @@ describe('Chainr', function() {
                     order.push('a');
 
                     cb();
-                }, 200);
+                }, 500);
             })
             .par(function(cb) {
                 setTimeout(function() {
