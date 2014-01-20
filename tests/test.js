@@ -174,7 +174,7 @@ describe('Chainr', function() {
                 });
         });
 
-        it.skip('should should throw when no error handler is registered', function(done) {
+        it('should should throw when no error handler is registered', function(done) {
             expect(function() {
                 chainr()
                     .seq(function(cb) {
