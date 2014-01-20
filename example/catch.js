@@ -3,7 +3,7 @@ var chainr = require('../');
 chainr()
     .seq(function (cb) {
         console.log('1');
-        setTimeout(function() {
+        setTimeout(function () {
             cb(new Error('foo'));
         }, 100);
     })
@@ -15,6 +15,6 @@ chainr()
         console.log('3');
         setTimeout(cb, 100);
     })
-    .catch(function(error, cb) {
+    .catch(function (error, cb) {
         console.log(error);
     });

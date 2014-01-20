@@ -3,7 +3,7 @@ var chainr = require('../');
 chainr()
     .seq(function (cb) {
         console.log('1');
-        setTimeout(function() {
+        setTimeout(function () {
             cb();
             cb();
         }, 100);
