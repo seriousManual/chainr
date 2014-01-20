@@ -2,19 +2,20 @@ var chainr = require('../');
 
 chainr()
     .seq(function (cb) {
-        console.log('1');
-        setTimeout(function () {
-            cb(new Error('foo'));
-        }, 100);
+        cb(new Error('foo'));
     })
     .seq(function (cb) {
         console.log('2');
-        setTimeout(cb, 100);
-    })
-    .seq(function (cb) {
-        console.log('3');
-        setTimeout(cb, 100);
+        cb();
     })
     .catch(function (error, cb) {
         console.log(error);
+        cb(error);
+    })
+    .catch(function(error, cb) {
+        console.log(error);
+        cb();
+    })
+    .seq(function() {
+        console.log('final');
     });
