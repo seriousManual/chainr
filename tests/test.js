@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var chainr = require('../');
 
 describe('Chainr', function() {
-    it.only('should call in sequence', function(done) {
+    it('should call in sequence', function(done) {
         var order = [];
 
         chainr()
@@ -100,56 +100,7 @@ describe('Chainr', function() {
         });
     });
 
-    it('should not call catch when no error occurs', function(done) {
-        chainr()
-            .seq(function(cb) {
-                setTimeout(cb, 100);
-            })
-            .seq(function(cb) {
-                setTimeout(cb, 100);
-            })
-            .catch(function() {
-                expect(false).to.be.true;
-
-                done();
-            })
-            .seq(function() {
-                expect(true).to.be.true;
-
-                done();
-            });
-    });
-
-    it('should jump to catch when error occurs, should execute subsequential seq, should execute not intermediate', function(done) {
-        var caboomError = new Error('caboom');
-        var order = [];
-
-        chainr()
-            .seq(function(cb) {
-                setTimeout(function() {
-                    order.push('a');
-
-                    cb(caboomError)
-                }, 100);
-            })
-            .seq(function(cb) {
-                order.push('b');
-
-                setTimeout(cb, 100);
-            })
-            .catch(function(error, cb) {
-                order.push(error);
-
-                cb();
-            })
-            .seq(function() {
-                expect(order).to.deep.equal(['a', caboomError]);
-
-                done();
-            });
-    });
-
-    it('should crash on multiple done call', function() {
+    it.skip('should crash on multiple done call', function() {
         expect(function() {
             chainr()
                 .seq(function(cb) {
@@ -157,6 +108,96 @@ describe('Chainr', function() {
                     cb();
                 });
         }).to.throw();
+    });
+
+    describe('error handling', function() {
+        it('should not call catch when no error occurs', function(done) {
+            chainr()
+                .seq(function(cb) {
+                    setTimeout(cb, 100);
+                })
+                .seq(function(cb) {
+                    setTimeout(cb, 100);
+                })
+                .catch(function() {
+                    expect(false).to.be.true;
+
+                    done();
+                })
+                .seq(function() {
+                    expect(true).to.be.true;
+
+                    done();
+                });
+        });
+
+        it('should jump to catch when error occurs, should execute subsequential seq, should execute not intermediate', function(done) {
+            var caboomError = new Error('caboom');
+            var order = [];
+
+            chainr()
+                .seq(function(cb) {
+                    setTimeout(function() {
+                        order.push('a');
+
+                        cb(caboomError)
+                    }, 100);
+                })
+                .seq(function(cb) {
+                    order.push('b');
+
+                    setTimeout(cb, 100);
+                })
+                .catch(function(error, cb) {
+                    order.push(error);
+
+                    cb();
+                })
+                .seq(function() {
+                    expect(order).to.deep.equal(['a', caboomError]);
+
+                    done();
+                });
+        });
+
+        it.skip('should should throw when no error handler is registered', function(done) {
+            expect(function() {
+                chainr()
+                    .seq(function(cb) {
+                        cb(new Error('caboom'));
+                    });
+            }).to.throw();
+        });
+
+        it('should pass on error', function(done) {
+            var caboomError = new Error('caboom');
+            var caboomError2 = new Error('caboom2');
+            var order = [];
+
+            chainr()
+                .seq(function(cb) {
+                    setTimeout(function() {
+                        order.push('a');
+
+                        cb(caboomError)
+                    }, 100);
+                })
+                .catch(function(error, cb) {
+                    order.push('c1');
+
+                    cb(caboomError2);
+                })
+                .catch(function(error, cb) {
+                    order.push('c2');
+
+                    cb();
+                })
+                .seq(function() {
+                    expect(order).to.deep.equal(['a', 'c1', 'c2']);
+
+                    done();
+                });
+        });
     });
 
     describe.skip('sketchout', function() {
