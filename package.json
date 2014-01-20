@@ -1,6 +1,6 @@
 {
   "name": "chainr",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "flow control library",
   "main": "index.js",
   "scripts": {
@@ -11,15 +11,15 @@
     "url": "git://github.com/zaphod1984/chainr.git"
   },
   "keywords": [
-      "flow-control",
-      "flow control",
-      "flow",
-      "control",
-      "async",
-      "asynchronous",
-      "chain",
-      "sequence",
-      "parallel"
+    "flow-control",
+    "flow control",
+    "flow",
+    "control",
+    "async",
+    "asynchronous",
+    "chain",
+    "sequence",
+    "parallel"
   ],
   "author": "Manuel Ernst <zaphod84@gmx.de>",
   "license": "MIT",
