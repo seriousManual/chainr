@@ -10,12 +10,12 @@ describe('Chainr', function() {
             .seq(function(cb) {
                 order.push('a');
 
-                setTimeout(cb, 200);
+                setTimeout(cb, 20);
             })
             .seq(function(cb) {
                 order.push('b');
 
-                setTimeout(cb, 100);
+                setTimeout(cb, 5);
             })
             .seq(function(cb) {
                 order.push('c');
@@ -34,21 +34,21 @@ describe('Chainr', function() {
                     order.push('a');
 
                     cb();
-                }, 500);
+                }, 30);
             })
             .par(function(cb) {
                 setTimeout(function() {
                     order.push('b');
 
                     cb();
-                }, 100);
+                }, 20);
             })
             .par(function(cb) {
                 setTimeout(function() {
                     order.push('c');
 
                     cb();
-                }, 50);
+                }, 5);
             })
             .seq(function() {
                 order.push('last');
@@ -64,10 +64,10 @@ describe('Chainr', function() {
 
             chain
                 .seq('foo', function(cb) {
-                    setTimeout(cb.bind(null, null, 'bar'), 200);
+                    setTimeout(cb.bind(null, null, 'bar'), 20);
                 })
                 .seq('bax', function(cb) {
-                    setTimeout(cb.bind(null, null, 'baz'), 200);
+                    setTimeout(cb.bind(null, null, 'baz'), 20);
                 })
                 .seq(function() {
                     expect(chain.vars).to.deep.equal({
@@ -84,7 +84,7 @@ describe('Chainr', function() {
 
             chain
                 .seq(function(cb) {
-                    setTimeout(cb.bind(null, null, 'bar'), 200);
+                    setTimeout(cb.bind(null, null, 'bar'), 20);
                 })
                 .seq(function() {
                     expect(chain.vars).to.deep.equal({});
@@ -98,10 +98,10 @@ describe('Chainr', function() {
 
             chain
                 .par('foo', function(cb) {
-                    setTimeout(cb.bind(null, null, 'bar'), 200);
+                    setTimeout(cb.bind(null, null, 'bar'), 20);
                 })
                 .par('bax', function(cb) {
-                    setTimeout(cb.bind(null, null, 'baz'), 100);
+                    setTimeout(cb.bind(null, null, 'baz'), 1);
                 })
                 .seq(function() {
                     expect(chain.vars).to.deep.equal({
@@ -128,10 +128,10 @@ describe('Chainr', function() {
         it('should not call catch when no error occurs', function(done) {
             chainr()
                 .seq(function(cb) {
-                    setTimeout(cb, 100);
+                    setTimeout(cb, 10);
                 })
                 .seq(function(cb) {
-                    setTimeout(cb, 100);
+                    setTimeout(cb, 10);
                 })
                 .catch(function() {
                     expect(false).to.be.true;
@@ -155,12 +155,12 @@ describe('Chainr', function() {
                         order.push('a');
 
                         cb(caboomError)
-                    }, 100);
+                    }, 10);
                 })
                 .seq(function(cb) {
                     order.push('b');
 
-                    setTimeout(cb, 100);
+                    setTimeout(cb, 10);
                 })
                 .catch(function(error, cb) {
                     order.push(error);
@@ -185,7 +185,6 @@ describe('Chainr', function() {
 
         it('should pass on error', function(done) {
             var caboomError = new Error('caboom');
-            var caboomError2 = new Error('caboom2');
             var order = [];
 
             chainr()
@@ -194,20 +193,20 @@ describe('Chainr', function() {
                         order.push('a');
 
                         cb(caboomError)
-                    }, 100);
+                    }, 10);
                 })
                 .catch(function(error, cb) {
-                    order.push('c1');
+                    order.push(error);
 
-                    cb(caboomError2);
+                    cb(error);
                 })
                 .catch(function(error, cb) {
-                    order.push('c2');
+                    order.push(error);
 
                     cb();
                 })
                 .seq(function() {
-                    expect(order).to.deep.equal(['a', 'c1', 'c2']);
+                    expect(order).to.deep.equal(['a', caboomError, caboomError]);
 
                     done();
                 });
