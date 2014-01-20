@@ -79,6 +79,20 @@ describe('Chainr', function() {
                 });
         });
 
+        it('should not put values into the internal value holder when no name is present', function(done) {
+            var chain = chainr();
+
+            chain
+                .seq(function(cb) {
+                    setTimeout(cb.bind(null, null, 'bar'), 200);
+                })
+                .seq(function() {
+                    expect(chain.vars).to.deep.equal({});
+
+                    done();
+                });
+        });
+
         it('should add the supplied values to the chain.vars object', function(done) {
             var chain = chainr();
 
