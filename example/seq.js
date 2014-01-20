@@ -14,5 +14,5 @@ chain
     .seq(function (cb) {
         console.log('3');
 
-        console.log( chain.vars );
+        console.log(chain.vars);
     });

@@ -21,12 +21,14 @@ If name is specified, the second argument sent to `cb` goes to `chain.var`.
 
 #### example/seq.js
 ```javascript
-var chainr = require('chainr');
+var chainr = require('../');
 
-chainr()
-    .seq(function (cb) {
+var chain = chainr();
+
+chain
+    .seq('foo', function (cb) {
         console.log('1');
-        setTimeout(cb, 100);
+        setTimeout(cb.bind(null, null, 'bar'), 100);
     })
     .seq(function (cb) {
         console.log('2');
@@ -34,7 +36,8 @@ chainr()
     })
     .seq(function (cb) {
         console.log('3');
-        setTimeout(cb, 100);
+
+        console.log(chain.vars);
     });
 ```
 Output:
@@ -42,6 +45,7 @@ Output:
 1
 2
 3
+{ foo: 'bar' }
 ```
 
 ### .par(cb)
@@ -53,19 +57,21 @@ If name is specified, the second argument sent to `cb` goes to `chain.var`.
 #### example/par.js
 
 ```javascript
-var chainr = require('chainr');
+var chainr = require('../');
 
-chainr()
+var chain = chainr();
+
+chain
     .par(function(cb) {
         setTimeout(function() {
             console.log('1.1');
             cb();
         }, 1000);
     })
-    .par(function(cb) {
+    .par('foo', function(cb) {
         setTimeout(function() {
             console.log('1.2');
-            cb();
+            cb(null, 'bar');
         }, 400);
     })
     .par(function(cb) {
@@ -75,8 +81,7 @@ chainr()
         }, 100);
     })
     .seq(function (cb) {
-        console.log('2');
-        setTimeout(cb, 100);
+        console.log(chain.vars);
     });
 ```
 Output:
@@ -84,7 +89,7 @@ Output:
 1.3
 1.2
 1.1
-2
+{ foo: 'bar' }
 ```
 
 ### .catch(cb)
