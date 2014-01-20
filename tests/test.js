@@ -1,3 +1,5 @@
+var domain = require('domain');
+
 var expect = require('chai').expect;
 
 var chainr = require('../');
@@ -114,14 +116,22 @@ describe('Chainr', function () {
         });
     });
 
-    it.skip('should crash on multiple done call', function () {
-        expect(function () {
+    it('should crash on multiple done call', function (done) {
+        var testDomain = domain.create();
+
+        testDomain.run(function() {
             chainr()
                 .seq(function (cb) {
                     cb();
                     cb();
                 });
-        }).to.throw();
+        });
+
+        testDomain.on('error', function(error) {
+            expect(error.message).to.match(/callback has been called multiple times/);
+
+            done();
+        });
     });
 
     describe('error handling', function () {
@@ -175,12 +185,20 @@ describe('Chainr', function () {
         });
 
         it('should should throw when no error handler is registered', function (done) {
-            expect(function () {
+            var testDomain = domain.create();
+
+            testDomain.run(function() {
                 chainr()
                     .seq(function (cb) {
                         cb(new Error('caboom'));
                     });
-            }).to.throw();
+            });
+
+            testDomain.on('error', function(error) {
+                expect(error.message).to.match(/uncatched error/);
+
+                done();
+            });
         });
 
         it('should pass on error', function (done) {
