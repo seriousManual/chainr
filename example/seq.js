@@ -1,9 +1,11 @@
 var chainr = require('../');
 
-chainr()
-    .seq(function (cb) {
+var chain = chainr();
+
+chain
+    .seq('foo', function (cb) {
         console.log('1');
-        setTimeout(cb, 100);
+        setTimeout(cb.bind(null, null, 'bar'), 100);
     })
     .seq(function (cb) {
         console.log('2');
@@ -11,5 +13,6 @@ chainr()
     })
     .seq(function (cb) {
         console.log('3');
-        setTimeout(cb, 100);
+
+        console.log( chain.vars );
     });
