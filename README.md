@@ -50,7 +50,7 @@ Output:
 
 ### .par(cb)
 ### .par(name, cb)
-Functions registered via `.seq` are executed in parallel.
+Functions registered via `.par` are executed in parallel.
 Each `cb` gets a callback assigned which is used to signal the end of the callback execution.
 If name is specified, the second argument sent to `cb` goes to `chain.var`.
 
