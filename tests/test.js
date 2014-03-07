@@ -60,6 +60,39 @@ describe('Chainr', function () {
             });
     });
 
+    it('should call one', function (done) {
+        var order = [];
+
+        chainr()
+            .one(function (cb) {
+                setTimeout(function () {
+                    order.push('a');
+
+                    cb();
+                }, 100);
+            })
+            .one(function (cb) {
+                setTimeout(function () {
+                    order.push('b');
+
+                    cb();
+                }, 50);
+            })
+            .one(function (cb) {
+                setTimeout(function () {
+                    order.push('c');
+
+                    cb();
+                }, 1);
+            })
+            .seq(function () {
+                order.push('last');
+
+                expect(order).to.deep.equal(['c', 'last']);
+                done();
+            });
+    });
+
     describe('internal value holder', function () {
         it('should add the supplied values to the chain.vars object', function (done) {
             var chain = chainr();
