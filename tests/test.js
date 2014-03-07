@@ -61,10 +61,12 @@ describe('Chainr', function () {
     });
 
     it('should call one', function (done) {
+        var ex = [];
         var order = [];
 
         chainr()
             .one(function (cb) {
+                ex.push('a');
                 setTimeout(function () {
                     order.push('a');
 
@@ -72,6 +74,7 @@ describe('Chainr', function () {
                 }, 100);
             })
             .one(function (cb) {
+                ex.push('b');
                 setTimeout(function () {
                     order.push('b');
 
@@ -79,6 +82,7 @@ describe('Chainr', function () {
                 }, 50);
             })
             .one(function (cb) {
+                ex.push('c');
                 setTimeout(function () {
                     order.push('c');
 
@@ -89,6 +93,7 @@ describe('Chainr', function () {
                 order.push('last');
 
                 expect(order).to.deep.equal(['c', 'last']);
+                expect(ex).to.deep.equal(['a', 'b', 'c']);
                 done();
             });
     });
