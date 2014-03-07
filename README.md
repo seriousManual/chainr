@@ -92,6 +92,55 @@ Output:
 { foo: 'bar' }
 ```
 
+### .one(cb)
+### .one(name, cb)
+Functions registered via `.one` are executed in parallel.
+`one` acts equally as `par` with the distinction that it does not wait for all callbacks to execute, one call is sufficient.
+Each `cb` gets a callback assigned which is used to signal the end of the callback execution.
+If name is specified, the second argument sent to `cb` goes to `chain.var`. (Notice that not every value might be in there!)
+
+#### example/one.js
+
+```javascript
+var chainr = require('../');
+
+var order = [];
+var chain = chainr();
+
+chain
+    .one(function(cb) {
+        setTimeout(function() {
+            console.log('1.1');
+            order.push('1.1');
+            cb();
+        }, 1000);
+    })
+    .one('foo', function(cb) {
+        setTimeout(function() {
+            console.log('1.2');
+            order.push('1.2');
+            cb(null, 'bar');
+        }, 400);
+    })
+    .one(function(cb) {
+        setTimeout(function() {
+            console.log('1.3');
+            order.push('1.3');
+            cb();
+        }, 100);
+    })
+    .seq(function (cb) {
+        console.log(order);
+    });
+```
+Output:
+```
+1.3
+1.2
+1.1
+['1.1']
+```
+
 ### .catch(cb)
 When in a sequential or parallel context a callback gets an error object assigned, the execution steps over all pending steps and skips to the next `catch` block.
 The catch block than receives the error and an callback that can be used to continue with the execution or to rethrow the error.
