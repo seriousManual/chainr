@@ -115,11 +115,11 @@ chain
             cb();
         }, 1000);
     })
-    .one('foo', function(cb) {
+    .one(function(cb) {
         setTimeout(function() {
             console.log('1.2');
             order.push('1.2');
-            cb(null, 'bar');
+            cb();
         }, 400);
     })
     .one(function(cb) {
