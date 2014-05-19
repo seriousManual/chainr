@@ -1,6 +1,4 @@
-# Chainr
-
-[![Build Status](https://travis-ci.org/zaphod1984/chainr.png)](https://travis-ci.org/zaphod1984/chainr)
+# Chainr [![Build Status](https://travis-ci.org/zaphod1984/chainr.png)](https://travis-ci.org/zaphod1984/chainr)
 
 [![NPM](https://nodei.co/npm/chainr.png)](https://nodei.co/npm/chainr/)
 
@@ -10,6 +8,12 @@ Simple flow control library inspired by [seq](https://npmjs.org/package/seq) by 
 
 The interface is quite similar but with a reduced function range.
 Instead of using the `this` property to assign a done-callback the traditional node way is used (a callback function as the last parameter).
+
+## Installation
+
+````bash
+npm install argumentor
+````
 
 ## API
 
