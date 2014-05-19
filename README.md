@@ -12,7 +12,7 @@ Instead of using the `this` property to assign a done-callback the traditional n
 ## Installation
 
 ````bash
-npm install argumentor
+npm install chainr
 ````
 
 ## API
