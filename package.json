@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/zaphod1984/chainr.git"
+    "url": "git://github.com/seriousManual/chainr.git"
   },
   "keywords": [
     "flow-control",
@@ -19,12 +19,13 @@
     "asynchronous",
     "chain",
     "sequence",
-    "parallel"
+    "parallel",
+    "seq"
   ],
-  "author": "Manuel Ernst <zaphod84@gmx.de>",
+  "author": "Manuel Ernst <seriousstuff@gmx.de>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zaphod1984/chainr/issues"
+    "url": "https://github.com/seriousManual/chainr/issues"
   },
   "dependencies": {},
   "devDependencies": {

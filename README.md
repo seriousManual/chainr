@@ -1,4 +1,4 @@
-# Chainr [![Build Status](https://travis-ci.org/zaphod1984/chainr.png)](https://travis-ci.org/zaphod1984/chainr)
+# Chainr [![Build Status](https://travis-ci.org/seriousManual/chainr.png)](https://travis-ci.org/seriousManual/chainr)
 
 [![NPM](https://nodei.co/npm/chainr.png)](https://nodei.co/npm/chainr/)
 
