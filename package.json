@@ -1,6 +1,6 @@
 {
   "name": "chainr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "flow control library with a chaining interface, inspired by node-seq by substack",
   "main": "index.js",
   "scripts": {
