@@ -4,7 +4,7 @@
 
 [![NPM](https://nodei.co/npm-dl/chainr.png?months=3)](https://nodei.co/npm/chainr/)
 
-Simple flow control library inspired by [seq](https://npmjs.org/package/seq) by substack.
+Simple flow control library inspired by [seq](https://npmjs.org/package/seq) by substack and [async](https://npmjs.org/package/async) by caolan.
 
 The interface is quite similar but with a reduced function range.
 Instead of using the `this` property to assign a done-callback the traditional node way is used (a callback function as the last parameter).
